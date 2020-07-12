@@ -2,7 +2,8 @@ import os
 import glob
 import pandas as pd
 
-import logging
+import schedule
+import time
 
 from pymongo import MongoClient
 
@@ -28,8 +29,8 @@ def main():
     client = MongoClient(IP, PORT, username = USERNAME, password = PASSWORD)
     db = client[DB_NAME]
 
-    csv_paths = extract_csvs(CSV_PATH)
-    logging.info("Storing {} files to MongoDB".format(len(csv_paths)))
+    csv_paths = get_all_csv_paths(CSV_PATH)
+    print("Storing {} files to MongoDB".format(len(csv_paths)))
     for csv_path in csv_paths:
         csv_rel_path = os.path.relpath(csv_path, CSV_PATH)
         csv_rel_path_norm = os.path.normpath(csv_rel_path)
@@ -38,7 +39,7 @@ def main():
         col = db[csv_source]
 
         df = pd.read_csv(csv_path)
-        logging.info("-- Storing {} files to {}".format(len(df), csv_source))
+        print("--Storing {} files to {}".format(len(df), csv_source))
         for _, row in df.iterrows():
             data = dict(row)
             data_op = {'$set': data}
@@ -46,4 +47,8 @@ def main():
             
 
 if __name__ == '__main__':
-    main()
+    print("Start reading CSV files to MongoDB")
+    schedule.every().day.at("00:00").do(main)
+    while 1:
+        schedule.run_pending()
+        time.sleep(30)

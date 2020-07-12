@@ -18,5 +18,7 @@ Additionally, you need to change line 15 in the `docker-compose.yml` to the path
 To start this application, run:
 ```
 docker-compose up
+docker exec -it mongo python3 /scripts/CSV-to-MongoDB.py
 ```
-To see the database collections, you can use [mongo-express](https://github.com/mongo-express/mongo-express), which is available on `localhost:8081`. The MongoDB itself is available on port `27017`.
+To see the database collections, [mongo-express](https://github.com/mongo-express/mongo-express) is in use and available on `localhost:8081`. The MongoDB itself is available on port `27017`. The 
+
