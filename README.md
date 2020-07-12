@@ -5,6 +5,7 @@ This repository contains code for loading the files from [AirflowNewsCrawler](ht
 To use this system, you need to create a `.env` file in which the MongoDB information is available:
 
 ```
+MONGO_DATABASE_NAME=news
 MONGO_ROOT_USER=devroot
 MONGO_ROOT_PASSWORD=devroot
 MONGOEXPRESS_LOGIN=dev

@@ -7,14 +7,14 @@ import logging
 from pymongo import MongoClient
 
 
-CSV_PATH = "./output"
-DB_NAME = "news"
+CSV_PATH = "/pipelines"
+DB_NAME = os.environ['MONGO_DATABASE_NAME']
 
 IP = "0.0.0.0"
 PORT = 27017
 
-USERNAME = "devroot"
-PASSWORD = "devroot"
+USERNAME = os.environ['MONGO_ROOT_USER']
+PASSWORD = os.environ['MONGO_ROOT_PASSWORD']
 
 def get_all_csv_paths(path):
     csv_paths = []

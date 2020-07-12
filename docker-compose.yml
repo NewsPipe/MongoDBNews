@@ -6,13 +6,14 @@ services:
         environment:
             - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
             - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-            - MONGO_INITDB_DATABASE=news
+            - MONGO_INITDB_DATABASE=${MONGO_DATABASE_NAME}
         ports:
             - "27017:27017"
-            - "8888:8888"
+        env_file: 
+            - .env
         volumes:
             - ./mongodata:/data/db
-            - ./pipelines:../AirflowNewsCrawler/output/pipelines/
+            - ./pipelines:/pipelines
     mongo-express:
         image: mongo-express
         environment:
