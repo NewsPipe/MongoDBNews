@@ -43,11 +43,14 @@ def main():
         for _, row in df.iterrows():
             data = dict(row)
             data_op = {'$set': data}
-            col.update_one(data, data_op, upsert=True)
+            query = {'link': data['link']}
+            col.update_one(query, data_op, upsert=True)
             
 
 if __name__ == '__main__':
     print("Start reading CSV files to MongoDB")
+    main()
+    
     schedule.every().day.at("00:00").do(main)
     while 1:
         schedule.run_pending()
